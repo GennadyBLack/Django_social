@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+        <form action="{% url 'dashboard' %}" method="POST">
+          {% csrf_token %}
+{{form}}
+          <button type='submit' >Submit</button>
+        </form>
+
+
+{% endblock content %}

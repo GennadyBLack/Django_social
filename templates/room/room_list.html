@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+  {% load tz %}
+
+{% block content %}
+
+<div class="panel">
+        {% if rooms.count == 0 %}
+            <div class="panel panel-body"> "Нет ни одного начатого диалога"</div>
+        {% endif %}
+        <a href="{% url 'news_list' %}" class='mt-4 mb-4'> <button type="button" class="btn btn-dark">New Dialog</button></a>
+
+        {% for room in rooms %}
+            {% if room.chat_set.count == 0 %}
+                            <div class="card">
+                              <div class="card-body">
+
+
+                                <div class="container">
+                                  <div class="row">
+                                    <div class="col-md-auto">
+                                      <a class="list-group-item" href="{% url 'room_detail' id=room.id %}">{{room.name}}</a>
+                                    </div>
+                                    <div class="col">
+
+                                      <p>Нет Сообщений</p>
+
+                                    </div>
+                                    <div class="col col-lg-2">
+
+                                    </div>
+                                  </div>
+                                </div>
+
+
+
+
+
+
+
+                              </div>
+                            </div>
+
+                                    </div>
+{% else %}
+
+                {% with last_message=room.chat_set.last %}
+
+                <div class="card">
+                  <div class="card-body">
+
+
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-auto">
+                          <a class="list-group-item" href="{% url 'room_detail' id=room.id %}">{{room.name}}</a>
+                        </div>
+                        <div class="col">
+
+                          <p>{{last_message.text}}</p>
+
+                        </div>
+                        <div class="col col-lg-2">
+                        {{ last_message.date|utc }}
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+
+
+
+                  </div>
+                </div>
+
+                        </div>
+
+                {% endwith %}
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock content %}

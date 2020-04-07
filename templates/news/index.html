@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+{% for new in news %}
+    
+  <div class="jumbotron mt-3">
+  <h1 class="display-4"><a href="{{new.get_absolute_url}}">{{new.title}}</a></h1>
+  <p class="lead">{{new.}}</p>
+  <hr class="my-4">
+  <p>{{new.description}}</p>
+  <p class="lead">
+  	{{new.category}}
+  </p>
+  <img class="card-img-top" src="{{new.poster.url}}" alt="Card image cap">
+</div>
+{% endfor %}
+
+
+</div>
+{% endblock content %}
+

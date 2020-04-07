@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% for photo in news.newsshots_set.all %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+<img src="{{photo.image.url}}" alt="">   
+</div>   
+</div>
+</div>    {% endfor %}
+<a href="{% url 'news_list' %}"><button class="btn bnt-dark"> back</button></a>
+  <!-- Post Content -->
+  <header class="masthead" style="background-image: url('{{news.poster.url}}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>{{news.title}}</h1>
+            <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
+            <span class="meta">Posted by
+              <a href="#">Start Bootstrap</a>
+              on August 24, 2019</span>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>{{news.description}}</p>
+
+          <p>Science cuts two ways, of course; its products can be used for both good and evil. But there's no turning back from science. The early warnings about technological dangers also come from science.</p>
+
+          <p>What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.</p>
+
+          <p>A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That's how I felt seeing the Earth for the first time. I could not help but love and cherish her.</p>
+
+          <p>For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide us.</p>
+
+          <h2 class="section-heading">The Final Frontier</h2>
+
+          <p>There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.</p>
+
+          <p>There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.</p>
+
+          <blockquote class="blockquote">The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.</blockquote>
+
+          <p>Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.</p>
+
+          <h2 class="section-heading">Reaching for the Stars</h2>
+
+          <p>As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.</p>
+
+          <a href="#">
+            <img class="img-fluid" src="img/post-sample-image.jpg" alt="">
+          </a>
+          <span class="caption text-muted">To go places and do things that have never been done before – that’s what living is all about.</span>
+
+          <p>{{news.text}}</p>
+
+          <p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.</p>
+
+          <p>Placeholder text by {{news.avtor.username}}
+            <a href="http://spaceipsum.com/">Space Ipsum</a>. Photographs by
+            <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <hr>
+  
+            <div class="single-form-left">
+                <!-- contact form grid -->
+                <div class="contact-single">
+                    <h3 class="editContent">
+                  <span class="sub-tittle editContent">{{news.review_set.count }}</span>
+                      
+                    </h3>
+                    {% if request.user.is_authenticated %}
+
+
+                    <!--=============FORM=================
+
+                    -->
+                    <div class="container">
+       <form id='FormReview' action="{% url 'add_review' %}" method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+
+                <label for="username">Username</label>
+                <input type="text" id='contactcomment' name="text" class="form-control" required>
+              </div>
+              <input type="hidden" name='news_id' value='{{news.id}}'>
+               <input type="hidden" id='contactparent' name='parent' value=''>
+
+              <input type="submit"  value="Login" class="btn btn-secondary btn-block">
+            </form>
+                </div>
+
+                {% else %}
+
+                    <p>Войдити на сайт чтобы оставить отзыв </p>
+                    <a href='{% url 'login' %}'>Login</a>
+                    {% endif %}
+                   
+                <!--  //contact form grid ends here -->
+            </div>
+        </div>
+        </div>
+
+
+
+        {% for review in news.get_review %}
+            <div class="media py-5">
+              
+                <img src="{{review.user.profile.avatar.url}}" class="mr-3 img-fluid" alt="image" style="width:100px;height: 100px; border-radius: 50%">
+                <div class="media-body mt-4">
+                    <h5 class="mt-0 editContent">
+                        {{ review.user.username }}
+                    </h5>
+                    <p class="mt-2 editContent">
+                        {{ review.text }}
+                    </p>
+                    <a href="#formReview"
+                       onclick="addReview('{{ review.user.username }}', '{{ review.id }}')">Ответить</a>
+                    {% for rew in review.review_set.all %}
+
+
+                        <div class="media mt-5 editContent">
+                            <a class="pr-3" href="#">
+                                <img style="width:100px;height: 100px; border-radius: 50%" src="{{review.user.profile.avatar.url}}" class="img-fluid "
+                                     alt="image">
+                            </a>
+                            <div class="media-body">
+                                <h5 class="mt-0 editContent">{{ rew.user.username }}</h5>
+                                <p class="mt-2 editContent">{{ rew.text }}</p>
+                            </div>
+                        </div>
+
+                        
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+ 
+    <script>
+
+        function addReview(name, id) {
+            document.getElementById("contactparent").value = id;
+            document.getElementById("contactcomment").innerText = `${name}, `
+        }
+
+    </script>
+{% endblock content %}

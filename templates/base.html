@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Font Awesome -->
+<link rel="stylesheet" href="{% static '/css/all.css' %}">
+<!-- Bootstrap -->
+<link rel="stylesheet" href="{% static '/css/bootstrap.css' %}">
+<!-- Custom -->
+<link rel="stylesheet" href="{% static '/css/style.css' %}">
+
+<link rel="stylesheet" href="{% static '/css/lightbox.min.css' %}">
+
+  <title>  {% block title %}
+realtor
+    {% endblock %}</title>
+</head>
+<body>
+{% include 'partials/top_bar.html' %}
+{% include 'partials/navbar.html' %}
+{% include 'partials/alert.html' %}
+
+  {% block content %}
+
+
+  {% endblock content %}
+
+  <footer id="main-footer" class="py-4 bg-primary text-white text-center">
+    Copyright &copy;
+    <span class="year"></span> BT Real Estate
+  </footer>
+  <script src="{% static '/js/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static '/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static '/js/main.js '%}"></script>
+    <script src="{% static '/js/lightbox.min.js' %}"></script>
+    <script src="../static/js/jquery-3.3.1.min.js"></script>
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/main.js"></script>
+      <script src="../static/js/lightbox.min.js"></script>
+      <script>setInterval(function(){
+        $('#message').fadeOut('slow');
+      },3000);
+</script>
+</body>
+</html>

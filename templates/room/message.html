@@ -1,0 +1,46 @@
+
+{% load tz %}
+
+ <div class="container mt-4">
+<div class="alert alert-success" role="alert">
+  <h4 class="alert-heading">  {{ message_item.user.username }}</h4>
+  <p>{{ message_item.text|safe }}</p>
+  <hr>
+  <p class="mb-0">{{ message_item.date|utc }}</p>
+
+
+
+
+</div>
+</div>
+<!-- <style>
+.containere img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.containere img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+}
+
+.time-right {
+    float: right;
+    color: #aaa;
+}
+
+.time-left {
+    float: left;
+    color: #999;
+}
+</style>
+
+<div class="containere">
+  <img src="{{ user.profile.avatar.url }}" alt="Avatar" style="width:100%;">
+  <p>{{ message_item.text|safe }}</p>
+  <span class="time-right">{{message_item.date|utc }}</span>
+</div> -->
