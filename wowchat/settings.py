@@ -134,8 +134,8 @@ USE_TZ = True
 #Email settings
 EMAIL_HOST = 'richard.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER='richard.black96@mail.ru'
-EMAIL_HOST_PASSWORD='Dgpwmjdg11'
+EMAIL_HOST_USER='richard.bawdd@.ru'
+EMAIL_HOST_PASSWORD='awdfadaefgkawd'
 EMAIL_USE_TLS=True
 
 
