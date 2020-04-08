@@ -26,13 +26,15 @@
       </nav>
     </div>
   </section>
-
+    
   <section id="dashboard" class="py-4">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
           <h2>Welcome {{request.user.username}}</h2>
           <p>Here are the property listings that you have inquired about</p>
+
+
         {% if not request.user.profile %}
         <form action="{% url 'dashboard' %}" method="POST">
           {% csrf_token %}
@@ -40,14 +42,41 @@
           <button type='submit' >Submit</button>
         </form>
         {% else %}
-
+        
         <h1>{{request.user.profile.phone}}</h1>
         <img src="{{request.user.profile.avatar.url}}" alt="">
-        <a href="{% url 'edit_profile' %}">Edit Profile</a>
+        <a href="{% url 'edit_profile' %}"> <button class="btn bnt-dark">Edit Profile</button></a>
         {% endif %}
         </div>
       </div>
     </div>
   </section>
+   <h1>List of my News</h1>
+  {% if news %}
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Date</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+   <tbody>
+{% for new in news %}
+ 
+    <tr>
+      <th scope="row">1</th>
+      <td><a href="{{new.get_absolute_url}}">{{new.title}}</a></td>
+      <td>{{new.date}}</td>
+      <td><a href="{% url 'edit_profile_news' id=new.id %}"><button>Edit</button></a></td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+
+  {% else %}
+     <a href="{% url 'news_create' %}"></a> <button>Create news</button>
+  {% endif %}
 
 {% endblock content %}

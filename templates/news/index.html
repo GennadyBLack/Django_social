@@ -1,8 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
+<!-- {% load new_tag %} -->
 {% block content %}
 <div class="container">
-{% for new in news %}
+
+<!-- {% get_categories as categ %}
+
+{% for cat in categ %}
+    <p>{{cat.name}}</p>
+
+{% endfor %} -->
+
+<form class="form-inline my-2 my-lg-0 "  method="POST" action='{% url "search_news" %}'>
+   {% csrf_token %}
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name='search'>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+{% if news %}
+    {% for new in news %}
     
   <div class="jumbotron mt-3">
   <h1 class="display-4"><a href="{{new.get_absolute_url}}">{{new.title}}</a></h1>
@@ -10,13 +25,20 @@
   <hr class="my-4">
   <p>{{new.description}}</p>
   <p class="lead">
-  	{{new.category}}
+    {{new.category}}
   </p>
   <img class="card-img-top" src="{{new.poster.url}}" alt="Card image cap">
 </div>
 {% endfor %}
 
 
+
+
+
+{% else %}
+    <h1>Статей пока нет </h1>
+{% endif %}
+
+
 </div>
 {% endblock content %}
-

@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from .forms import ProfileForm
-# Create your views here.
 from django.shortcuts import render,redirect
 from django.contrib import messages,auth
 from django.contrib.auth.models import User
 from .models import Profile
+from news.models import News
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from news.forms import NewsForm
 
 
 def login(request):
@@ -62,6 +64,7 @@ def logout(request):
 
 @login_required(login_url='login')
 def dashboard(request):
+    news = News.objects.filter(avtor=request.user)
     form = ProfileForm()
     if request.method == 'POST':
         form = ProfileForm(request.POST,request.FILES)
@@ -70,7 +73,7 @@ def dashboard(request):
             profile.user = request.user
             profile.save()
             return redirect(dashboard)
-    return render(request,'accounts/dashboard.html',{'form':form})
+    return render(request,'accounts/dashboard.html',{'form':form,'news':news})
 
 @login_required(login_url='login')
 def edit_profile(request):
@@ -87,3 +90,21 @@ def edit_profile(request):
 def profile_list(request):
     users = User.objects.all()
     return render(request,'accounts/profile_list.html',{'users':users})
+
+@login_required(login_url='login')
+def profile_list_search(request):
+    if request.method == "POST":
+        if request.POST['search_user']:
+            users = User.objects.filter(username__icontains=request.POST['search_user'])
+            messages.success(request,'Было найдено' + str(users.count()) + 'users')
+            return render(request,'accounts/profile_list.html',{'users':users})
+    
+    users = User.objects.all()
+    return render(request,'accounts/profile_list.html',{'users':users})
+
+
+
+def edit_profile_news(request,id):
+    print(id)
+    #form = NewsForm()
+    return render(request, 'accounts/profile_list.html',{})

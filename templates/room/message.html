@@ -2,17 +2,24 @@
 {% load tz %}
 
  <div class="container mt-4">
-<div class="alert alert-success" role="alert">
-  <h4 class="alert-heading">  {{ message_item.user.username }}</h4>
-  <p>{{ message_item.text|safe }}</p>
+<div class="alert alert-success row" role="alert">
+  <img src="{{message_item.user.profile.avatar.url}}" alt="" style="width: 50px;height: 50px;border-radius: 50%">
+  <h4 class="alert-heading mr-3 ml-4">  {{ message_item.user.username }}</h4>
+  <p class="mr-3">{{ message_item.text|safe }}</p>
   <hr>
   <p class="mb-0">{{ message_item.date|utc }}</p>
-
-
-
-
 </div>
 </div>
+
+ <!-- 
+<div class="media">
+  <img src="{{ message_item.user.profile.avatar.image.url }}" class="mr-3" alt="{{ message_item.date|utc }}">
+  <div class="media-body">
+    <h5 class="mt-0">{{ message_item.user.username }}</h5>
+    {{ message_item.text|safe }}
+  </div>
+</div>
+
 <!-- <style>
 .containere img {
     float: left;

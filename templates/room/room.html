@@ -6,7 +6,7 @@
 
 {% if not chat %}
     <div class="panel panel-body">
-       <h1>"Невозможно начать беседу. Не найден пользователь или вы не имеете доступа к данной беседе."</h1>"Невозможно начать беседу. Не найден пользователь или вы не имеете доступа к данной беседе."
+       <h1>"Невозможно начать беседу. Не найден пользователь или вы не имеете доступа к данной беседе."</h1>
     </div>
 {% else %}
     {% load tz %}
@@ -29,7 +29,7 @@
 
             {% csrf_token %}
             {% bootstrap_form form %}
-            <button type="submit" class="btn btn-dark">Dark</button>
+            <button type="submit" class="btn btn-dark">Text</button>
         </form>
     </div>
     <!--             PAGINATION             -->

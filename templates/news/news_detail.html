@@ -79,7 +79,18 @@
                 <!-- contact form grid -->
                 <div class="contact-single">
                     <h3 class="editContent">
-                  <span class="sub-tittle editContent">{{news.review_set.count }}</span>
+                  
+                    {% if news.review_set.count < 1  %}
+                        <p>Пока что нет ни одного комментария</p>
+                      {% else %}
+                      <span class="sub-tittle editContent">
+                {{news.review_set.count}} Comments
+                      </span>
+
+                    {% endif %}
+                    
+                        
+                  
                       
                     </h3>
                     {% if request.user.is_authenticated %}
@@ -89,17 +100,17 @@
 
                     -->
                     <div class="container">
-       <form id='FormReview' action="{% url 'add_review' %}" method="POST">
+     <form id='FormReview' action="{% url 'add_review' %}" method="POST">
               {% csrf_token %}
               <div class="form-group">
 
-                <label for="username">Username</label>
+                <label for="username">Comment</label>
                 <input type="text" id='contactcomment' name="text" class="form-control" required>
               </div>
               <input type="hidden" name='news_id' value='{{news.id}}'>
                <input type="hidden" id='contactparent' name='parent' value=''>
 
-              <input type="submit"  value="Login" class="btn btn-secondary btn-block">
+              <input type="submit"  value="Comment" class="btn btn-secondary btn-block">
             </form>
                 </div>
 

@@ -39,6 +39,7 @@ class News(models.Model):
 	category = models.ForeignKey(Category,on_delete= models.SET_NULL,null=True,blank=True)
 	url = models.SlugField(max_length=160,unique=True)
 	draft = models.BooleanField(default=False)
+	date = models.DateTimeField(auto_now_add=True)
 
 	def get_review(self):
 		return self.review_set.filter(parent__isnull=True)
