@@ -5,6 +5,8 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-3">
+
+
 <img src="{{photo.image.url}}" alt="">   
 </div>   
 </div>
@@ -74,6 +76,10 @@
   </article>
 
   <hr>
+
+      {% if request.user == news.avtor %}
+      <a href="{% url 'edit' id=news.id %}"><button type="button" class="btn btn-info">EDIT</button></a>
+      {% endif %}
   
             <div class="single-form-left">
                 <!-- contact form grid -->

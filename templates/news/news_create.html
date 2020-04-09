@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<h1>create</h1>
+<form action="{% url 'news_create' %}" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+{{form.as_p}}
+<button type="submit">Create News</button>
+</form>
 {% endblock content %}

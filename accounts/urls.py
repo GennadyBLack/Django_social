@@ -1,8 +1,8 @@
 from django.urls import path
 from .views import *
 
+
 urlpatterns = [
- path('<int:id>/edit_profile_news/',edit_profile_news,name='edit_profile_news'),
     path('login/',login,name='login'),
     path('register/',register,name='register'),
     path('logout/',logout,name='logout'),

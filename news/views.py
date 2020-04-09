@@ -1,34 +1,51 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,redirect
 from .models import News,Review
 from django.views.generic.base import View
 from django.contrib import messages
 from django.urls import reverse
 from django.db.models import Q
+from django.views.generic.edit import CreateView
+from .forms import NewsForm
+from django.contrib.auth.decorators import login_required
+
+
 
 
 def news_list(request):
 	news = News.objects.filter(draft=False)
 	return render(request,'news/index.html',context = {'news':news})
 
+@login_required(login_url='login')
+def edit(request,id):
+	form = NewsForm(instance=News.objects.get(id=id))
+	if request.method =="POST":
+		form = NewsForm(request.POST,instance=News.objects.get(id=id))
+		if form.is_valid():
+			form.save()
+			messages.success(request, 'news has been changed')
+			return render(request,'news/news_edit.html',{'id':id,'form':form})
+	return render(request,'news/news_edit.html',{'id':id,'form':form})
 
 
+@login_required(login_url='login')
 def news_create(request):
-    form = PizzaForm()
-    if request.method == 'POST':
-        form = PizzaForm(request.POST,request.FILES)
-        if form.is_valid():
-            pizza = form.save(commit=False)
-            pizza.pizzashop = request.user.pizzashop
-            pizza.save()
-            return redirect(pizza_list)
-    return render(request,'pizza/add_pizza.html',{form})
-    return render(request,'news/news_create.html')
+	form = NewsForm()
+	if request.method =="POST":
+		form = NewsForm(request.POST,request.FILES)
+		if form.is_valid():
+			news = form.save(commit=False)
+			news.avtor = request.user
+			news.save()
+			return render(request, 'news/index.html')
+	return render(request, 'news/news_create.html',context={'form':form})
+    
+
 
 def news_detail(request,id):
 	news = get_object_or_404(News,pk=id)
 	return render(request,'news/news_detail.html',context = {'news':news})
 
-
+@login_required(login_url='login')
 def add_review(request):
 	if request.method == "POST":
 		text = request.POST['text']	
@@ -42,6 +59,7 @@ def add_review(request):
 		messages.success(request,'review is added')
 		return render(request,'news/news_detail.html',context = {'news':news})
 	return render(request,'news/news_detail.html',context = {'news':news})
+
 
 def search_news(request):
 	if request.method == "POST":

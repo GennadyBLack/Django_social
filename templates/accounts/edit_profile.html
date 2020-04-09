@@ -2,9 +2,9 @@
 {% load static %}
 {% block content %}
 
-        <form action="{% url 'dashboard' %}" method="POST">
+        <form action="{% url 'edit_profile' %}" method="POST" enctype="multipart/form-data">
           {% csrf_token %}
-{{form}}
+			{{form}}
           <button type='submit' >Submit</button>
         </form>
 

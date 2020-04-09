@@ -1,6 +1,31 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+ <h1>List of my News</h1>
+  {% if news %}
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Date</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+   <tbody>
+{% for new in news %}
+    <tr>
+      <th scope="row">{{new.id}}</th>
+      <td><a href="{{new.get_absolute_url}}">{{new.title}}</a></td>
+      <td>{{new.date}}</td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+
+  {% else %}
+     <a href="{% url 'news_create' %}"></a> <button>Create news</button>
+  {% endif %}
 <section id="showcase-inner" class="py-5 text-white">
     <div class="container">
       <div class="row text-center">
@@ -51,32 +76,6 @@
       </div>
     </div>
   </section>
-   <h1>List of my News</h1>
-  {% if news %}
-  <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Title</th>
-      <th scope="col">Date</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-   <tbody>
-{% for new in news %}
- 
-    <tr>
-      <th scope="row">1</th>
-      <td><a href="{{new.get_absolute_url}}">{{new.title}}</a></td>
-      <td>{{new.date}}</td>
-      <td><a href="{% url 'edit_profile_news' id=new.id %}"><button>Edit</button></a></td>
-    </tr>
-{% endfor %}
-  </tbody>
-</table>
-
-  {% else %}
-     <a href="{% url 'news_create' %}"></a> <button>Create news</button>
-  {% endif %}
+  
 
 {% endblock content %}

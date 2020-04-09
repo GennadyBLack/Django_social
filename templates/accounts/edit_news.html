@@ -2,7 +2,8 @@
 {% load static %}
 {% block content %}
 
-        <form action="{% url 'edit_profile_news' %}" method="POST">
+{{id}}
+        <form action="{% url 'edit_news' %}" method="POST">
           {% csrf_token %}
 			{{form}}
           <button type='submit'>Submit</button>

@@ -34,7 +34,7 @@ class News(models.Model):
 	description = models.TextField('Description',max_length=500)
 	poster = models.ImageField('Постер',upload_to='movies/')
 	year = models.PositiveIntegerField('Дата выхода',default=2019)
-	avtor = models.OneToOneField(User,verbose_name='avtor',related_name='news_avtor',on_delete=models.CASCADE)
+	avtor = models.ForeignKey(User,verbose_name='avtor',related_name='news_avtor',on_delete=models.CASCADE)
 	tag = models.ManyToManyField(Tag,related_name='tags')
 	category = models.ForeignKey(Category,on_delete= models.SET_NULL,null=True,blank=True)
 	url = models.SlugField(max_length=160,unique=True)
@@ -53,7 +53,7 @@ class News(models.Model):
 
 	class Meta:
 		verbose_name='News'
-		verbose_name_plural='Newses'
+		verbose_name_plural='News'
 
 class NewsShots(models.Model):
 	title= models.CharField('Title',max_length=100)

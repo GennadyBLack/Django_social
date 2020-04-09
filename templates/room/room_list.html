@@ -8,7 +8,7 @@
         {% if rooms.count == 0 %}
             <div class="panel panel-body"> "Нет ни одного начатого диалога"</div>
         {% endif %}
-        <a href="{% url 'news_list' %}" class='mt-4 mb-4'> <button type="button" class="btn btn-dark">New Dialog</button></a>
+       <!--  <a href="{% url 'news_list' %}" class='mt-4 mb-4'> <button type="button" class="btn btn-dark">New Dialog</button></a> -->
 
         {% for room in rooms %}
             {% if room.chat_set.count == 0 %}

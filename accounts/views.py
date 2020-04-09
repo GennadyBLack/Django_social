@@ -7,7 +7,7 @@ from .models import Profile
 from news.models import News
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-from news.forms import NewsForm
+
 
 
 def login(request):
@@ -53,6 +53,8 @@ def register(request):
             return redirect('register')
     return render(request,'accounts/register.html')
 
+
+@login_required(login_url='login')
 def logout(request):
     if request.method == 'POST':
         auth.logout(request)
@@ -91,6 +93,8 @@ def profile_list(request):
     users = User.objects.all()
     return render(request,'accounts/profile_list.html',{'users':users})
 
+
+
 @login_required(login_url='login')
 def profile_list_search(request):
     if request.method == "POST":
@@ -102,9 +106,3 @@ def profile_list_search(request):
     users = User.objects.all()
     return render(request,'accounts/profile_list.html',{'users':users})
 
-
-
-def edit_profile_news(request,id):
-    print(id)
-    #form = NewsForm()
-    return render(request, 'accounts/profile_list.html',{})
