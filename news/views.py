@@ -1,15 +1,37 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from .models import News,Review
-from django.views.generic.base import View
+from .models import *
 from django.contrib import messages
 from django.urls import reverse
 from django.db.models import Q
-from django.views.generic.edit import CreateView
-from .forms import NewsForm
+from .forms import NewsForm,RatingForm
 from django.contrib.auth.decorators import login_required
+from django.views.generic import View
+from django.http import JsonResponse, HttpResponse
 
 
+class AddStarRating(View):
+    """Добавление рейтинга фильму"""
+    def get_client_ip(self, request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+            print(x_forwarded_for)
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+            print(ip,'IIIIPPPPPPPP')
+        return ip
 
+    def post(self, request):
+        form = RatingForm(request.POST)
+        if form.is_valid():
+            Rating.objects.update_or_create(
+                ip=self.get_client_ip(request),
+                news_id=int(request.POST.get("news")),
+                defaults={'star_id': int(request.POST.get("star"))} # Какое поле мы хотим поменять
+            )
+            return HttpResponse(status=201)
+        else:
+            return HttpResponse(status=400)
 
 def news_list(request):
 	news = News.objects.filter(draft=False)
@@ -43,7 +65,8 @@ def news_create(request):
 
 def news_detail(request,id):
 	news = get_object_or_404(News,pk=id)
-	return render(request,'news/news_detail.html',context = {'news':news})
+	rating = RatingForm()
+	return render(request,'news/news_detail.html',context = {'news':news,'star_form':rating})
 
 @login_required(login_url='login')
 def add_review(request):

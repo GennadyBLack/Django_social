@@ -81,7 +81,7 @@ def dashboard(request):
 def edit_profile(request):
     form = ProfileForm(instance=Profile.objects.get(user=request.user))
     if request.method == 'POST':
-        form = ProfileForm(request.POST,instance=Profile.objects.get(user=request.user))
+        form = ProfileForm(request.POST,request.FILES,instance=Profile.objects.get(user=request.user))
         if form.is_valid():
             form.save()
             return redirect(dashboard)

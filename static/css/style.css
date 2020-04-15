@@ -94,3 +94,31 @@ img {
     font-size: 30px; }
   #showcase-inner h1 {
     font-size: 40px; } }
+
+.rating{
+  overflow: hidden;
+  vertical-align: bottom;
+  display: inline-block;
+  width: 155px;
+  height: 30px;
+
+}
+
+.rating > input{
+  opacity: 0;
+  margin-right: -100%;
+}
+.rating > label{
+  position: relative;
+  display: block;
+  background: url('../star-off-big.png');
+  background-size: 30px 30px;
+}
+.rating > label:before{
+  display: block;
+  opacity: 0;
+  content: '';
+  width: 30px;
+  height: 30px;
+  background: url('../star-on-big.png');
+}
